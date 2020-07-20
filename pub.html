@@ -1,0 +1,30 @@
+<html>
+<head>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <script>
+        var client = mqtt.connect({
+            host: 'localhost',
+            port: 3000,
+            clientId: 'http.publisher'
+        });
+    </script>
+
+    <!--<div id='buttonPublish' v-on:click='doPublish'>[送信する]</div>-->
+    <button id='buttonPublish' v-on:click='doPublish'>[送信する]</button>
+
+    <script>
+        new Vue({
+            el: '#buttonPublish',
+            methods: {
+                doPublish: function(){
+                    //client.publish('topic0', Date.now().toString());
+                    client.publish('topic0', "Hello!!!");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

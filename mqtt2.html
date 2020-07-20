@@ -1,0 +1,41 @@
+<html>
+<head>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <script>
+        var client = mqtt.connect({
+            host: 'localhost',
+            port: 3000,
+            clientId: 'http.subscriber'
+        });
+
+        client.subscribe('topic/01');
+
+        var data = {};
+        data.messages = [];
+
+        client.on('message', function(topic, payload){
+            var message = String.fromCharCode.apply(null, payload);
+            console.log(message);
+            data.messages.push(message);
+        });
+    </script>
+
+    <ul id='listMessage'>
+        <li v-for='message in messages'>
+            {{ message }}
+        </li>
+    </ul>
+
+    <a href="mqtt_pub.html" >送信ページ</a>
+
+    <script>
+        new Vue({
+            el: '#listMessage',
+            data: data
+        });
+    </script>
+</body>
+</html>

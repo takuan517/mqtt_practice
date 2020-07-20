@@ -1,0 +1,32 @@
+<html>
+<head>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <script>
+        var client = mqtt.connect({
+            host: 'localhost',
+            port: 3000,
+            clientId: 'http.publisher'
+        });
+    </script>
+      <form id="form1">
+        <input type="text" id="input_message" value="">
+        <button id='buttonPublish' v-on:click='doPublish'>送信する</button>
+      </form>
+
+
+    <script>
+        new Vue({
+            el: '#buttonPublish',
+            methods: {
+                doPublish: function(){
+                    var input_message = document.getElementById("input_message").value;
+                    client.publish('topic/01', input_message);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
